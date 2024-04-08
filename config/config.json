@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "web_app",
+    "mode": "dev",
+    "port": 8081,
+    "version": "v0.0.1",
+    "start_time": "2022-07-01",
+    "machine_id": 1
+  },
+  "mysql": {
+    "post": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "password": "root",
+    "dbname": "sql_demo"
+  },
+  "auth": {
+    "jwt_expire": 8760
+  },
+  "log": {
+    "level": "debug",
+    "filename": "gin.log",
+    "max_size": 200,
+    "max_age": 30,
+    "max_backups": 365
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": 6379,
+    "password": "",
+    "db": 0,
+    "pool_size": 100
+  },
+  "user": {
+    "email": "732132486@qq.com",
+    "name": "Tom"
+  }
+}
