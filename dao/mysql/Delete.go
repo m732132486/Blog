@@ -24,3 +24,12 @@ func Delete(TitleID int64) error {
 
 	return nil
 }
+
+func TitleUserid(titleID int64) ([]models.Article, error) {
+	var articles []models.Article
+	if err := DB.Where("title_id = ?", titleID).Find(&articles).Error; err != nil {
+		return nil, err
+	}
+
+	return articles, nil
+}

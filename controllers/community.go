@@ -5,6 +5,7 @@ import (
 	rediss "practice/dao/redis"
 	"practice/logic"
 	"practice/models"
+	"practice/pkg/jwt"
 	"sort"
 	"strconv"
 
@@ -70,6 +71,22 @@ func DeleteArticle(c *gin.Context) {
 		zap.L().Error("解析请求参数失败", zap.Any("err", err))
 		return
 	}
+	//查找文章的用户id
+	titleUserid, err := logic.TitleUserid(id)
+	if err != nil {
+		return
+	}
+	//获取用户id
+	tokenString := c.GetHeader("Authorization")
+
+	userid, err := jwt.ParseTokenID(tokenString)
+	for _, article := range titleUserid {
+		if userid != article.UserID {
+			zap.L().Error("用户不匹配")
+			return
+		}
+	}
+
 	err = logic.Delete(id)
 	if err != nil {
 		zap.L().Error("删除文章失败", zap.Any("err", err))
