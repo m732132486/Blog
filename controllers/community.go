@@ -83,15 +83,18 @@ func DeleteArticle(c *gin.Context) {
 	for _, article := range titleUserid {
 		if userid != article.UserID {
 			zap.L().Error("用户不匹配")
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err": "用户不匹配",
+			})
+			return
+		}
+		err = logic.Delete(id)
+		if err != nil {
+			zap.L().Error("删除文章失败", zap.Any("err", err))
 			return
 		}
 	}
 
-	err = logic.Delete(id)
-	if err != nil {
-		zap.L().Error("删除文章失败", zap.Any("err", err))
-		return
-	}
 	c.JSON(200, gin.H{
 		"msg": "删除成功",
 	})
